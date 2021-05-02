@@ -1,0 +1,24 @@
+<div class="form-group">
+    <input type="text" class="form-control" placeholder="Search By Name" style="width:300px" [(ngModel)]="searchTerm" />
+</div>
+
+<h1 *ngIf="dataFromChild">
+    Data from child to parent: {{ dataFromChild?.name + ' is ' + dataFromChild?.gender }}
+</h1>
+
+<div *ngFor="let employee of employees | employeeFilter: searchTerm">
+    <div (click)="onClick(employee.id)" class="pointerCursor">
+        <app-displayemployee [employee]="employee" (notify)="handleNotify($event)" #childComponent>
+        </app-displayemployee>
+    </div>
+</div>
+
+
+<h1>Pass data from child to parent using template reference:</h1>
+<h3 #h1Variable></h3>
+<div *ngFor="let employee of employees">
+    <div (click)="h1Variable.innerHTML = childComponent.getNameAndGender()">
+        <app-displayemployee [employee]="employee" #childComponent>
+        </app-displayemployee>
+    </div>
+</div>
